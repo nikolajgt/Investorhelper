@@ -30,9 +30,9 @@ namespace Restful.Controllers
         // Bruger CreateUser logic fra User.cs
         [AllowAnonymous]
         [HttpPost("Create")]
-        public async Task<UserLogin> CreateUser(string username, string password, string fullname, string email)
+        public async Task<UserLogin> CreateUser([FromBody] CreateUserDTO user)
         {
-            var userdata = await _repository.CreateUser(username, password, fullname, email);
+            var userdata = await _repository.CreateUser(user.Username, user.Password, user.Fullname, user.Email);
 
             return userdata;
         }
@@ -44,9 +44,9 @@ namespace Restful.Controllers
         [AllowAnonymous]
         [Route("authenticate")]
         [HttpPost]
-        public ActionResult Login([FromBody] UserLoginDTO User)
+        public ActionResult Login([FromBody] UserLoginDTO user)
         {
-            var token = _repository.Authenticate(User.Username, User.Password);
+            var token = _repository.Authenticate(user.Username, user.Password);
             if (token == null)
                 return new UnauthorizedObjectResult(token);
 

@@ -16,8 +16,11 @@
                     <input type="checkbox" checked="checked" name="remember">
                     <label>Remember me </label>
                 </div>
+          </div>
+          <div class="Login-footer">
+                <h5>Dont have an account? Create a free one</h5>
 
-
+                <button type="submit" @click="$router.push('CreateUser')">Here </button>
           </div>
       </div>
   </div>
@@ -50,7 +53,7 @@ export default {
                 this.$router.push("/")
             }
             else {
-                alert("failed to login")
+                console.log("failed to login")
             
             }
         }
@@ -58,7 +61,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $background-color: #081B33;
 $background-color-2: #152642;
 
@@ -78,7 +81,7 @@ $text-color:  #2699FB;
 
     .Login-box {
         width: 300px;
-        height: 400px;
+        height: 500px;
         background-color: $background-color;
         margin: auto;
         top: 20%;
@@ -119,13 +122,15 @@ $text-color:  #2699FB;
                 margin-bottom: 10px;
                 height: 30px;
                 background-color: $background-color-2;
-                border: 1px solid $text-color;
+                outline: 1px solid $text-color;
                 border-radius: 0px;
                 color: $text-color;
+                border: 0;
+                font-family: 'JetBrains Mono';
             }
 
             input:focus {
-                outline: 1px solid $border-color;
+                outline: 0.5px solid $border-color;
             }
 
             button {
@@ -137,6 +142,7 @@ $text-color:  #2699FB;
                 color: $text-color;
                 outline: 1px solid $text-color;
                 border: 0;
+                font-family: 'JetBrains Mono';
             }
 
             button:hover {
@@ -156,12 +162,43 @@ $text-color:  #2699FB;
                     height: 16px;
                     width: 16px;
                     margin-right: 20px;
+                    background-color: $background-color-2;
                 }
 
                 label {
                     color: $text-color;
                 }
                 
+            }
+        }
+        
+        .Login-footer {
+            height:100px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            top:100px;
+
+
+            h5 {
+                margin: 0;
+                color:$text-color;
+            
+            }
+
+            button {
+                outline:1px solid $text-color;
+                border: 0;
+                background-color: $background-color-2;
+                color:$text-color;
+                width: 100px;
+                height: 25px;
+                margin: auto;
+                font-family: 'JetBrains Mono';
+            }
+
+            button:hover {
+                background-color: #004b8c;
             }
         }
     }

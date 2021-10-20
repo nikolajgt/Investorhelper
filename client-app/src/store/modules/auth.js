@@ -1,4 +1,4 @@
-import { jwtDecrypt } from "./JwtParser";
+import { jwtDecrypt, tokenAlive } from "./JwtParser";
 import axios from 'axios';
 
 
@@ -9,20 +9,14 @@ import axios from 'axios';
  });
 
  const userLogin = '/User/authenticate';
-//  const FinanceEndPointApi = '/Api';
+
 
 const state = () => ({
     authData: {
-        UserId: "",
-        Username: "",
-        Password: "",
-        Token: "",
-        RefreshToken: "",
-        TokenExpire: "",
-    },
-    loginData: {
-        Uname: "",
-        Pword: ""
+        Token: '',
+        Unique_name: '',
+        Expire: '',
+        Issued: ''
     },
     loginStatus: "",
   });
@@ -30,6 +24,16 @@ const state = () => ({
 const getters = {
     getLoginStatus(state) {
         return state.loginStatus;
+    },
+    getAuthData(state) {
+        return state.authData;
+    },
+    isTokenActive(state) {
+        if(!state.authData.tokenExpire) {
+            return false;
+        }
+
+        return tokenAlive(state.authData.tokenExpire);
     }
 };
  
@@ -40,29 +44,25 @@ const actions = {                               //Her skal jeg lave min api kald
             Password: payload.Password
         })
         .then(response => { 
-            if(!response === null)
-            commit("saveTokenData", response.data)
+            commit("saveTokenData", response.data)              // ARBEJDE HER SIDST!!
             commit("setLoginStatus", "success");
-            console.log(response.data)
+           
         })
-        
-        
     }
 };
  
 const mutations = {
     saveTokenData(state, data) {
-        localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("refresh_token", data.refresh_token);
-
-        const jwtDecodedValue = jwtDecrypt(data.access_token);
+        const tokenData = jwtDecrypt(data);
         const newTokenData = {
-            Token: data.access_token,
-            RefreshToken: data.refresh_token,
-            TokenExpire: jwtDecodedValue.exp,
-            UserId: jwtDecodedValue.sub,
-            Username: jwtDecodedValue.userName,
+            Token: data,
+            Unique_name: tokenData.unique_name,
+            Expire: tokenData.exp,
+            Issued: tokenData.iat,
         };
+        localStorage.setItem("access_token", data);
+        localStorage.setItem("refresh_time", tokenData.exp)
+        
         state.authData = newTokenData;
     },
     setLoginStatus(state, value) {
