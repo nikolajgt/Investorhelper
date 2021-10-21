@@ -1,6 +1,7 @@
 export function jwtDecrypt(token) {
-    var base64Url = token.split(".")[1];
-    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var test = JSON.stringify(token);
+    var base64Url = test.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/").toString();
     var jsonPayload = decodeURIComponent(
       window.atob(base64)
         .split("")

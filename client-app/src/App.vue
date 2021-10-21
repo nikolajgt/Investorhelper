@@ -5,6 +5,18 @@
   <router-view/>
 </template>
 
+<script>
+//import Sidebar from './components/Sidebar.vue'
+
+export default {
+  name: "nav",
+  components: {
+    //Sidebar,
+  }
+}
+</script>
+
+
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 

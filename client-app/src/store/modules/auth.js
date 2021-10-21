@@ -29,11 +29,11 @@ const getters = {
         return state.authData;
     },
     isTokenActive(state) {
-        if(!state.authData.tokenExpire) {
+        if(!state.authData.Expire) {
             return false;
         }
 
-        return tokenAlive(state.authData.tokenExpire);
+        return tokenAlive(state.authData.Expire);
     }
 };
  
@@ -60,6 +60,7 @@ const mutations = {
             Expire: tokenData.exp,
             Issued: tokenData.iat,
         };
+        
         localStorage.setItem("access_token", data);
         localStorage.setItem("refresh_time", tokenData.exp)
         
@@ -67,7 +68,7 @@ const mutations = {
     },
     setLoginStatus(state, value) {
         state.loginStatus = value;
-    }
+    },
 };
 
 export default{
